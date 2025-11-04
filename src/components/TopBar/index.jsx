@@ -1,21 +1,19 @@
 import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
 
-import "./styles.css";
-
-/**
- * Define TopBar, a React component of Project 4.
- */
-function TopBar () {
-    return (
-      <AppBar className="topbar-appBar" position="absolute">
-        <Toolbar>
-          <Typography variant="h5" color="inherit">
-            This is the TopBar component
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    );
-}
+const TopBar = ({ title }) => (
+  <AppBar position="static">
+    <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Typography variant="h6" noWrap>
+       quang xuan nguyen
+      </Typography>
+      <Box sx={{ textAlign: "right" }}>
+        <Typography variant="subtitle1" noWrap>
+          {title || ""}
+        </Typography>
+      </Box>
+    </Toolbar>
+  </AppBar>
+);
 
 export default TopBar;
