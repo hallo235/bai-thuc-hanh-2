@@ -1,43 +1,41 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import {
-  Divider,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   Typography,
+  Divider,
 } from "@mui/material";
-
-import "./styles.css";
 import models from "../../modelData/models";
 
-/**
- * Define UserList, a React component of Project 4.
- */
-function UserList () {
-    const users = models.userListModel();
-    return (
-      <div>
-        <Typography variant="body1">
-          This is the user list, which takes up 3/12 of the window. You might
-          choose to use <a href="https://mui.com/components/lists/">Lists</a>{" "}
-          and <a href="https://mui.com/components/dividers/">Dividers</a> to
-          display your users like so:
-        </Typography>
-        <List component="nav">
-          {users.map((item) => (
-            <>
-              <ListItem>
-                      <ListItemText primary={item.first_name}/>
-              </ListItem>
-              <Divider />
-            </>
-          ))}
-        </List>
-        <Typography variant="body1">
-          The model comes in from models.userListModel()
-        </Typography>
-      </div>
-    );
-}
+const UserList = ({ setTopBarTitle }) => {
+  const location = useLocation();
+  const users = useMemo(() => models.userListModel(), []);
+
+  useEffect(() => {
+    setTopBarTitle?.("Users");
+  }, [setTopBarTitle, location.pathname]);
+
+  return (
+    <>
+      <Typography variant="h6" sx={{ px: 2, pt: 1, pb: 1 }}>
+        Users
+      </Typography>
+      <Divider />
+      <List dense>
+        {users.map((u) => (
+          <ListItemButton
+            key={u._id}
+            component={RouterLink}
+            to={`/users/${u._id}`}
+          >
+            <ListItemText primary={`${u.first_name} ${u.last_name}`} />
+          </ListItemButton>
+        ))}
+      </List>
+    </>
+  );
+};
 
 export default UserList;
